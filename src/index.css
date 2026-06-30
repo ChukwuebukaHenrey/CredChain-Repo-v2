@@ -1,18 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-bg-base: #0a0510;
+  --color-bg-surface: #0f0a1a;
+  --color-bg-elevated: #160d24;
+  --color-border-main: #1e1530;
+  --color-border-subtle: #150f22;
+
+  --color-brand-purple: #7C3AED;
+  --color-brand-purple-dim: #4C1D95;
+  --color-accent-cyan: #00D4FF;
+  --color-accent-green: #10B981;
+  --color-accent-amber: #F59E0B;
+
+  --color-txt-primary: #FFFFFF;
+  --color-txt-secondary: #A89BC2;
+  --color-txt-muted: #6B5F7A;
+
+  --color-hash-green: #22C55E;
+  --color-hash-red: #EF4444;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-none: 0px;
 }
 
 body {
-  background-color: #05050a;
-  color: #f3f4f6;
+  background-color: #0a0510;
+  color: #FFFFFF;
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
+
+/* Custom font scale utility classes */
+.scale-xs { font-size: 11px; line-height: 1.4; }
+.scale-sm { font-size: 13px; line-height: 1.5; }
+.scale-base { font-size: 15px; line-height: 1.6; }
+.scale-lg { font-size: 18px; line-height: 1.5; }
+.scale-xl { font-size: 24px; line-height: 1.3; }
+.scale-2xl { font-size: 32px; line-height: 1.2; }
+.scale-3xl { font-size: 48px; line-height: 1.1; }
+.scale-4xl { font-size: 72px; line-height: 1.0; }
 
 /* Custom subtle scrollbar */
 ::-webkit-scrollbar {
@@ -29,4 +63,92 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3b3b55;
 }
+
+:root, [data-theme="v2"] {
+  --bg-deep: #0a0510;
+  --bg-card: #12091f;
+  --bg-sidebar: #0f0720;
+  --primary: #7c3aed;
+  --cyan: #00d4ff;
+  --gold: #c9a84c;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+}
+
+[data-theme="v1"] {
+  --bg-deep: #04091a;
+  --bg-card: #0b1528;
+  --bg-sidebar: #060d1f;
+  --primary: #00d4ff;
+  --cyan: #00d4ff;
+  --gold: #c9a84c;
+  --text-primary: #f0f4ff;
+  --text-secondary: #7a8caa;
+}
+
+[data-theme="light"] {
+  --bg-deep: #f5f7fa;
+  --bg-card: #ffffff;
+  --bg-sidebar: #eef1f6;
+  --primary: #7c3aed;
+  --cyan: #0099cc;
+  --gold: #d97706;
+  --text-primary: #0f1117;
+  --text-secondary: #4b5563;
+}
+
+[data-theme="v1"] body, [data-theme="light"] body {
+  background-color: var(--bg-deep) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="v1"] .bg-\[\#05050a\], [data-theme="v1"] .bg-\[\#08080f\] {
+  background-color: var(--bg-deep) !important;
+}
+[data-theme="v1"] .bg-\[\#0d0d16\], [data-theme="v1"] .bg-\[\#0f0f1b\], [data-theme="v1"] .bg-\[\#111118\] {
+  background-color: var(--bg-card) !important;
+}
+[data-theme="v1"] .bg-\[\#090913\] {
+  background-color: var(--bg-sidebar) !important;
+}
+
+[data-theme="light"] .bg-\[\#05050a\], [data-theme="light"] .bg-\[\#08080f\] {
+  background-color: var(--bg-deep) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="light"] .bg-\[\#0d0d16\], [data-theme="light"] .bg-\[\#0f0f1b\], [data-theme="light"] .bg-\[\#111118\] {
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: #e5e7eb !important;
+}
+[data-theme="light"] .bg-\[\#090913\] {
+  background-color: var(--bg-sidebar) !important;
+  color: var(--text-primary) !important;
+  border-color: #e5e7eb !important;
+}
+[data-theme="light"] .text-white {
+  color: var(--text-primary) !important;
+}
+[data-theme="light"] .text-gray-400, [data-theme="light"] .text-gray-300 {
+  color: var(--text-secondary) !important;
+}
+
+.resume-preview {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+.resume-preview * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@keyframes pulseCustom {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.animate-pulse-custom {
+  animation: pulseCustom 2s ease-in-out infinite;
+}
+
 

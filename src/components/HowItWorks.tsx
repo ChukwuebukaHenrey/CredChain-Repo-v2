@@ -1,103 +1,126 @@
-import { motion } from "motion/react";
-import { Send, Hash, HeartHandshake } from "lucide-react";
+import { Send, Hash, Search } from "lucide-react";
+import FadeIn from "./FadeIn";
 
 export default function HowItWorks() {
-  const steps = [
-    {
-      id: "step-1",
-      num: "01",
-      icon: Send,
-      title: "Institutions Issue",
-      desc: "Institutions approve and issue credentials directly to candidate profiles, ready for verification.",
-      color: "from-purple-500/20 to-purple-600/5",
-      borderGlow: "group-hover:border-purple-500/30"
-    },
-    {
-      id: "step-2",
-      num: "02",
-      icon: Hash,
-      title: "CredChain Secures",
-      desc: "Credential proofs are anchored securely on Solana as tamper-resistant proofs while personal information remains strictly off-chain.",
-      color: "from-teal-500/20 to-teal-600/5",
-      borderGlow: "group-hover:border-teal-500/30"
-    },
-    {
-      id: "step-3",
-      num: "03",
-      icon: HeartHandshake,
-      title: "Employers Verify",
-      desc: "Employers sweep or scan the QR code or visit a candidate's public profile to confirm credentials instantly.",
-      color: "from-emerald-500/20 to-emerald-600/5",
-      borderGlow: "group-hover:border-emerald-500/30"
-    }
-  ];
-
   return (
-    <section id="how-it-works" className="relative py-20 md:py-32 bg-[#05050a] overflow-hidden">
-      {/* Decorative vertical glow */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] h-[300px] bg-purple-900/5 rounded-full blur-[100px] pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="how-it-works" className="py-24 md:py-[120px] bg-bg-base overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-6">
         
         {/* Header Block */}
-        <div className="text-left max-w-2xl space-y-4 mb-16 md:mb-24">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/5 rounded-full">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-purple-400">Simplified Trust Workflow</span>
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
-            Trust Unleashed in Three Steps
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-            Discover how CredChain enables institutions to issue trusted credentials and helps employers verify them in under a second with absolute confidence.
-          </p>
+        <div className="text-left mb-16 max-w-2xl">
+          <FadeIn>
+            {/* Section Eyebrow */}
+            <div className="border-l-2 border-brand-purple pl-3 font-mono text-[11px] tracking-[0.1em] text-txt-muted uppercase mb-4">
+              VERIFICATION FLOW
+            </div>
+            
+            <h2 className="font-display text-white scale-2xl font-bold mb-4">
+              Three steps. One chain. Full trust.
+            </h2>
+            <p className="font-sans text-txt-secondary scale-base leading-relaxed">
+              The entire credential lifecycle handled end to end.
+            </p>
+          </FadeIn>
         </div>
 
-        {/* 3-Column Steps Container */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative">
+        {/* Cards Grid — NOT identical asymmetrical grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
-          {/* Connecting dashed line - desktop only */}
-          <div className="hidden md:block absolute top-1/2 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-purple-500/20 via-teal-500/20 to-emerald-500/20 -translate-y-8 pointer-events-none"></div>
-
-          {steps.map((step, i) => {
-            const Icon = step.icon;
-            return (
-              <motion.div
-                key={step.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
-                className="group relative flex flex-col space-y-6"
-              >
-                {/* Numeric Index */}
-                <span className="font-mono text-xs font-semibold text-purple-500/60 uppercase tracking-widest bg-purple-500/5 border border-purple-500/10 px-2.5 py-1 rounded self-start">
-                  Index // {step.num}
+          {/* Card 1 — Institutions Issue (LARGER, spans full width) */}
+          <div className="md:col-span-2">
+            <FadeIn delay={100}>
+              <div className="bg-bg-surface border border-border-main border-t-[3px] border-t-accent-green rounded-lg p-8 relative overflow-hidden group min-h-[220px] flex flex-col justify-between shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all">
+                {/* Numeral Watermark */}
+                <span className="font-display font-bold text-[120px] leading-none text-white opacity-[0.04] absolute bottom-[-20px] right-4 pointer-events-none select-none">
+                  01
                 </span>
 
-                {/* Main Card Element */}
-                <div className={`p-8 bg-[#0f0f18]/95 border border-white/5 rounded-2xl relative transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#11111d] ${step.borderGlow} shadow-lg flex flex-col items-start space-y-6 overflow-hidden`}>
+                {/* Content */}
+                <div className="space-y-4 max-w-2xl relative z-10 text-left">
+                  {/* Icon */}
+                  <Send className="w-6 h-6 text-accent-green flex-shrink-0" />
                   
-                  {/* Backdrop glowing background gradient */}
-                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${step.color} rounded-full blur-2xl opacity-50 group-hover:scale-125 transition-transform duration-500`}></div>
-
-                  {/* Icon Block */}
-                  <div className="relative p-4 rounded-xl bg-white/[0.02] border border-white/10 group-hover:border-white/20 transition-colors flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-white group-hover:text-emerald-400 transition-colors duration-300" />
-                  </div>
-
-                  <div className="space-y-3 relative z-10 text-left">
-                    <h3 className="text-lg font-display font-bold text-white group-hover:text-purple-300 transition-colors">
-                      {step.title}
-                    </h3>
-                    <p className="text-gray-400 text-xs sm:text-sm font-sans leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
+                  <h3 className="font-display text-white text-[20px] font-semibold">
+                    Institutions Issue
+                  </h3>
+                  
+                  <p className="font-sans text-txt-secondary scale-base leading-relaxed">
+                    Institutions approve and issue credentials directly to candidate profiles. AI-assisted OCR matching confirms document authenticity before any mint occurs.
+                  </p>
                 </div>
-              </motion.div>
-            );
-          })}
+
+                {/* Role Tag */}
+                <div className="font-mono text-[10px] text-txt-muted tracking-wider uppercase mt-6 relative z-10">
+                  // ISSUER ROLE
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+
+          {/* Card 2 — CredChain Secures */}
+          <div>
+            <FadeIn delay={150}>
+              <div className="bg-bg-surface border border-border-main border-t-[3px] border-t-brand-purple rounded-lg p-8 relative overflow-hidden group min-h-[280px] flex flex-col justify-between shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all">
+                {/* Numeral Watermark */}
+                <span className="font-display font-bold text-[120px] leading-none text-white opacity-[0.04] absolute bottom-[-20px] right-4 pointer-events-none select-none">
+                  02
+                </span>
+
+                {/* Content */}
+                <div className="space-y-4 relative z-10 text-left">
+                  {/* Icon */}
+                  <Hash className="w-6 h-6 text-brand-purple flex-shrink-0" />
+                  
+                  <h3 className="font-display text-white text-[20px] font-semibold">
+                    CredChain Secures
+                  </h3>
+                  
+                  <p className="font-sans text-txt-secondary scale-base leading-relaxed">
+                    Credential proof is anchored on Solana as a tamper-resistant record. Personal data stays off-chain. The hash is the proof.
+                  </p>
+                </div>
+
+                {/* Role Tag */}
+                <div className="font-mono text-[10px] text-txt-muted tracking-wider uppercase mt-6 relative z-10">
+                  // PROTOCOL LAYER
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+
+          {/* Card 3 — Employers Verify */}
+          <div>
+            <FadeIn delay={200}>
+              <div className="bg-bg-surface border border-border-main border-t-[3px] border-t-accent-amber rounded-lg p-8 relative overflow-hidden group min-h-[280px] flex flex-col justify-between shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all">
+                {/* Numeral Watermark */}
+                <span className="font-display font-bold text-[120px] leading-none text-white opacity-[0.04] absolute bottom-[-20px] right-4 pointer-events-none select-none">
+                  03
+                </span>
+
+                {/* Content */}
+                <div className="space-y-4 relative z-10 text-left">
+                  {/* Icon */}
+                  <Search className="w-6 h-6 text-accent-amber flex-shrink-0" />
+                  
+                  <h3 className="font-display text-white text-[20px] font-semibold">
+                    Employers Verify
+                  </h3>
+                  
+                  <p className="font-sans text-txt-secondary scale-base leading-relaxed">
+                    Scan a QR code or enter a credential ID. The Solana ledger returns a verified match in under a second. No registration required.
+                  </p>
+                </div>
+
+                {/* Role Tag */}
+                <div className="font-mono text-[10px] text-txt-muted tracking-wider uppercase mt-6 relative z-10">
+                  // VERIFIER ROLE
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+
         </div>
+
       </div>
     </section>
   );

@@ -10,7 +10,7 @@ export default function StatsBar({ issuedCount }: StatsBarProps) {
     {
       id: "stat-issued",
       label: "CREDENTIALS ISSUED",
-      value: (14520 + issuedCount).toLocaleString(),
+      value: (120 + issuedCount).toLocaleString(),
       change: "+100% Verified Proofs",
       icon: Award,
       color: "text-purple-400"
@@ -18,7 +18,7 @@ export default function StatsBar({ issuedCount }: StatsBarProps) {
     {
       id: "stat-institutions",
       label: "PARTNER INSTITUTIONS",
-      value: "84",
+      value: "12",
       change: "Universities & Professional Sectors",
       icon: School,
       color: "text-teal-400"
@@ -46,7 +46,7 @@ export default function StatsBar({ issuedCount }: StatsBarProps) {
       {/* Decorative vertical divider backdrop */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-950/5 to-transparent"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {stats.map((stat, i) => {
             const Icon = stat.icon;

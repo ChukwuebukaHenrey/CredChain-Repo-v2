@@ -1,176 +1,191 @@
-import { motion } from "motion/react";
-import { ShieldCheck, Cpu, Database, Server, RefreshCw } from "lucide-react";
-import { Credential } from "../types";
+import { Check, X, RefreshCw } from "lucide-react";
+import FadeIn from "./FadeIn";
 
-interface ProofSectionProps {
-  latestCredential?: Credential;
-}
-
-export default function ProofSection({ latestCredential }: ProofSectionProps) {
-  // A beautiful default verified ledger card
-  const sampleProof: Credential = latestCredential || {
-    id: "cred-77a",
-    candidateName: "Alex Chen",
-    institution: "Stanford University",
-    credentialTitle: "B.Sc in Computer Science",
-    gpaOrHonors: "3.98 GPA / Highest Honors",
-    issueDate: "June 2026",
-    txHash: "sol_tx_7c99e4bF...de81a30",
-    blockNumber: 182901309,
-    status: "VERIFIED",
-    network: "Solana Proof Anchor"
-  };
-
+export default function ProofSection() {
   return (
-    <section id="ledger" className="relative py-20 md:py-32 bg-[#08080f] overflow-hidden">
-      {/* Absolute glow highlights */}
-      <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-purple-900/5 rounded-full blur-[120px] pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="ledger" className="py-24 md:py-[120px] bg-bg-base overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Side Info Grid */}
-          <div className="lg:col-span-6 text-left space-y-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/5 rounded-full">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-purple-400">Anchored Securely</span>
-            </div>
-            
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
-              An Immutable Ledger<br />
-              <span className="bg-gradient-to-r from-purple-400 to-teal-400 bg-clip-text text-transparent">
-                Not a Proprietary Database.
-              </span>
-            </h2>
-
-            <div className="space-y-4 text-gray-400 text-sm sm:text-base leading-relaxed">
-              <p>
-                Traditional verification processes rely on easily editable data or slow manual email queries. These old records are easily forged, altered, or lost.
-              </p>
-              <p className="font-semibold text-white">
-                CredChain is fundamentally different.
-              </p>
-              <p>
-                Each credential is backed by a tamper-resistant proof stored securely on Solana. The actual candidate’s personal details remain safely off-chain, ensuring high privacy compliance.
-              </p>
-            </div>
-
-            {/* Graphic Comparison */}
-            <div className="grid grid-cols-2 gap-4 pt-4 font-mono text-xs">
-              <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-2">
-                <div className="flex items-center gap-1.5 text-red-400">
-                  <Database className="w-4 h-4" />
-                  <span>OLD DATABASE SERVERS</span>
-                </div>
-                <div className="text-gray-500 text-[10px] space-y-1">
-                  <div>• Editable records</div>
-                  <div>• Internal control hazards</div>
-                  <div>• Slow email processes</div>
-                </div>
+          {/* Left Column (50% / 6 cols) */}
+          <div className="lg:col-span-6 flex flex-col justify-center text-left">
+            <FadeIn>
+              {/* Section Eyebrow */}
+              <div className="border-l-2 border-accent-cyan pl-3 font-mono text-[11px] tracking-[0.1em] text-txt-muted uppercase mb-4">
+                ANCHORED SECURELY
               </div>
 
-              <div className="p-4 bg-purple-500/5 border border-purple-500/10 rounded-xl space-y-2">
-                <div className="flex items-center gap-1.5 text-emerald-400">
-                  <Server className="w-4 h-4" />
-                  <span>CREDCHAIN LEDGER</span>
+              {/* Headings */}
+              <h2 className="font-display text-white scale-2xl font-bold mb-2">
+                An Immutable Ledger.
+              </h2>
+              <h3 className="font-display text-txt-secondary scale-2xl font-bold mb-6">
+                Not a proprietary database.
+              </h3>
+
+              {/* Body Text */}
+              <p className="font-sans text-txt-secondary scale-base leading-relaxed mb-8">
+                Traditional verification relies on editable records and manual email queries. Those systems are slow, opaque, and forgeable.<br /><br />
+                CredChain is structurally different. Every credential is backed by a cryptographic proof on Solana. Personal data stays off-chain.
+              </p>
+
+              {/* Comparison block — two side-by-side panels */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                {/* Panel 1 - Old Database Servers */}
+                <div className="border-l-2 border-hash-red bg-hash-red/5 p-4 rounded-sm">
+                  <div className="font-mono text-[11px] text-hash-red font-semibold mb-3 tracking-wider">
+                    OLD DATABASE SERVERS
+                  </div>
+                  <ul className="space-y-2 font-sans text-[13px] text-txt-secondary">
+                    <li className="flex items-center gap-2">
+                      <X className="w-4 h-4 text-hash-red flex-shrink-0" />
+                      <span>Editable records</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <X className="w-4 h-4 text-hash-red flex-shrink-0" />
+                      <span>Internal control hazards</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <X className="w-4 h-4 text-hash-red flex-shrink-0" />
+                      <span>Slow email processes</span>
+                    </li>
+                  </ul>
                 </div>
-                <div className="text-gray-400 text-[10px] space-y-1">
-                  <div>• Tamper-resistant proofs</div>
-                  <div>• Shared trust framework</div>
-                  <div>• Instant automated checks</div>
+
+                {/* Panel 2 - CredChain Ledger */}
+                <div className="border-l-2 border-hash-green bg-hash-green/5 p-4 rounded-sm">
+                  <div className="font-mono text-[11px] text-hash-green font-semibold mb-3 tracking-wider">
+                    CREDCHAIN LEDGER
+                  </div>
+                  <ul className="space-y-2 font-sans text-[13px] text-txt-secondary">
+                    <li className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-hash-green flex-shrink-0" />
+                      <span>Tamper-resistant proofs</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-hash-green flex-shrink-0" />
+                      <span>Shared trust framework</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-hash-green flex-shrink-0" />
+                      <span>Instant automated checks</span>
+                    </li>
+                  </ul>
                 </div>
+
               </div>
-            </div>
+            </FadeIn>
           </div>
 
-          {/* Right Side Transaction Proof Viewer */}
-          <div className="lg:col-span-6 flex justify-center">
-            
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="w-full max-w-md bg-[#0d0d16] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative"
-            >
-              {/* Card Title Header */}
-              <div className="bg-gradient-to-r from-purple-950/30 to-black/25 px-5 py-4 border-b border-white/5 flex items-center justify-between font-mono text-xs text-gray-400">
-                <div className="flex items-center gap-2">
-                  <Cpu className="w-4 h-4 text-purple-400" />
-                  <span className="uppercase tracking-widest text-[10px]">Verification Proof Block</span>
-                </div>
-                <div className="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px] text-emerald-400">
-                  <span className="w-1 h-1 rounded-full bg-emerald-400 animate-ping"></span>
-                  <span>IMMUTABLE WRITE</span>
-                </div>
-              </div>
-
-              {/* Shimmer Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.01] to-transparent pointer-events-none"></div>
-
-              {/* Central Ledger Data Structure */}
-              <div className="p-6 space-y-4 text-left">
+          {/* Right Column (50% / 6 cols) */}
+          <div className="lg:col-span-6 flex justify-center lg:justify-end">
+            <FadeIn delay={150}>
+              {/* Signature Explorer Terminal Card */}
+              <div className="bg-bg-surface border border-border-main rounded-lg p-6 w-full max-w-[480px] shadow-[0_1px_3px_rgba(0,0,0,0.4)] transition-all hover:translate-y-[-2px] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
                 
-                <div className="space-y-3.5">
-                  <div className="border-b border-white/5 pb-3">
-                    <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">TRANSACTION HASH</div>
-                    <div className="text-sm font-mono text-white select-all font-bold tracking-tight truncate">
-                      {sampleProof.txHash}
+                {/* Card Header Row */}
+                <div className="flex items-center justify-between pb-5 border-b border-border-main mb-5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-hash-green animate-pulse-custom" />
+                    <span className="font-mono text-[11px] text-txt-muted uppercase tracking-wider font-semibold">
+                      LIVE TRANSACTION FEED
+                    </span>
+                  </div>
+                  <div className="border border-border-main rounded-sm px-2 py-1 text-[11px] font-mono text-accent-cyan">
+                    Solana Proof Anchor
+                  </div>
+                </div>
+
+                {/* Card Body - Grid */}
+                <div className="space-y-4">
+                  <div className="grid grid-cols-12 gap-1 items-start">
+                    <div className="col-span-5 font-mono text-[10px] text-txt-muted uppercase tracking-wider">
+                      TRANSACTION HASH
+                    </div>
+                    <div className="col-span-7 font-mono text-[13px] text-txt-primary select-all break-all">
+                      sol_tx_7c99e4bF_s_de81a30
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 border-b border-white/5 pb-3">
-                    <div>
-                      <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">BLOCKCHAIN NETWORK</div>
-                      <div className="text-sm font-sans text-purple-300 font-semibold">{sampleProof.network}</div>
+                  <div className="grid grid-cols-12 gap-1 items-start">
+                    <div className="col-span-5 font-mono text-[10px] text-txt-muted uppercase tracking-wider">
+                      BLOCKCHAIN NETWORK
                     </div>
-                    <div>
-                      <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">BLOCK NUMBER</div>
-                      <div className="text-sm font-mono text-white">#{sampleProof.blockNumber.toLocaleString()}</div>
+                    <div className="col-span-7 font-sans text-[13px] text-txt-primary font-medium">
+                      Solana Proof Anchor
                     </div>
                   </div>
 
-                  <div className="border-b border-white/5 pb-3">
-                    <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">CREDENTIAL SIGNATURE TYPE</div>
-                    <div className="text-sm font-sans text-white font-medium">{sampleProof.credentialTitle}</div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4 border-b border-white/5 pb-3">
-                    <div>
-                      <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">CANDIDATE / BENEFICIARY</div>
-                      <div className="text-sm font-sans text-white">{sampleProof.candidateName}</div>
+                  <div className="grid grid-cols-12 gap-1 items-start">
+                    <div className="col-span-5 font-mono text-[10px] text-txt-muted uppercase tracking-wider">
+                      BLOCK NUMBER
                     </div>
-                    <div>
-                      <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">AUTHORIZED ISSUER</div>
-                      <div className="text-sm font-sans text-white">{sampleProof.institution}</div>
+                    <div className="col-span-7 font-sans text-[13px] text-txt-primary font-medium">
+                      #182,901,309
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">ISSUED DATE</div>
-                      <div className="text-sm font-sans text-white">{sampleProof.issueDate}</div>
+                  <div className="grid grid-cols-12 gap-1 items-start">
+                    <div className="col-span-5 font-mono text-[10px] text-txt-muted uppercase tracking-wider">
+                      CREDENTIAL TYPE
                     </div>
-                    <div>
-                      <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">AUTHENTICITY RESULT</div>
-                      <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono font-bold text-emerald-400">
-                        <ShieldCheck className="w-3.5 h-3.5" />
-                        <span>VERIFIED MATCH</span>
-                      </div>
+                    <div className="col-span-7 font-sans text-[13px] text-txt-primary font-medium">
+                      B.Sc in Computer Science
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-12 gap-1 items-start">
+                    <div className="col-span-5 font-mono text-[10px] text-txt-muted uppercase tracking-wider">
+                      CANDIDATE
+                    </div>
+                    <div className="col-span-7 font-sans text-[13px] text-txt-primary font-medium">
+                      Alex Chen
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-12 gap-1 items-start">
+                    <div className="col-span-5 font-mono text-[10px] text-txt-muted uppercase tracking-wider">
+                      AUTHORIZED ISSUER
+                    </div>
+                    <div className="col-span-7 font-sans text-[13px] text-txt-primary font-medium">
+                      Stanford University
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-12 gap-1 items-start">
+                    <div className="col-span-5 font-mono text-[10px] text-txt-muted uppercase tracking-wider">
+                      ISSUED DATE
+                    </div>
+                    <div className="col-span-7 font-sans text-[13px] text-txt-primary font-medium">
+                      April 2026
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-12 gap-1 items-center pt-2">
+                    <div className="col-span-5 font-mono text-[10px] text-txt-muted uppercase tracking-wider">
+                      AUTHENTICITY RESULT
+                    </div>
+                    <div className="col-span-7 font-sans text-[13px] text-hash-green font-bold flex items-center gap-1">
+                      <Check className="w-4 h-4 text-hash-green" />
+                      <span>VERIFIED MATCH</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Simulated Verification Stamp Footer */}
-                <div className="p-4 bg-white/[0.01] border border-white/5 rounded-xl flex items-center justify-between text-[11px] font-mono text-gray-400 mt-6">
-                  <span className="flex items-center gap-1">
-                    <RefreshCw className="w-3 h-3 text-emerald-400 animate-spin" /> Live Syncing
-                  </span>
-                  <span>STAMP: SHA256CRYPT // OK</span>
+                {/* Card Footer Row */}
+                <div className="flex items-center justify-between mt-6 pt-5 border-t border-border-main">
+                  <div className="flex items-center gap-1.5 font-mono text-[11px] text-txt-muted">
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    <span>Live Syncing</span>
+                  </div>
+                  <div className="font-mono text-[11px] text-hash-green">
+                    STAMP: SHA256CRYPT // OK
+                  </div>
                 </div>
 
               </div>
-            </motion.div>
-
+            </FadeIn>
           </div>
 
         </div>

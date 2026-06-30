@@ -1,144 +1,141 @@
-import { motion } from "motion/react";
-import { User, Landmark, Building2, CheckCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { User, GraduationCap, Briefcase, Check } from "lucide-react";
+import FadeIn from "./FadeIn";
 
-interface WhoItsForProps {
-  onOpenDemo: (role?: 'candidate' | 'issuer' | 'verifier') => void;
-}
+export default function WhoItsFor() {
+  const navigate = useNavigate();
 
-export default function WhoItsFor({ onOpenDemo }: WhoItsForProps) {
-  const roles = [
+  const cards = [
     {
       id: "candidate",
-      badge: "CANDIDATE PORTAL",
-      badgeColor: "text-purple-400 bg-purple-500/10 border-purple-500/20",
-      topBorder: "border-t-[4px] border-t-purple-600",
-      icon: User,
+      topBorder: "border-t-[3px] border-t-brand-purple",
+      tag: "CANDIDATE PORTAL",
+      tagStyle: "bg-[#7C3AED]/15 text-brand-purple",
+      icon: <User className="w-5 h-5 text-txt-muted" />,
       title: "Students & Job Seekers",
-      desc: "Build your professional profile with verified achievements issued by trusted institutions. Showcase proven qualifications instantly.",
+      body: "Request verified credentials from your institution. Build AI-powered resumes. Share a verified public profile with employers.",
+      colorClass: "text-brand-purple",
+      btnBorder: "border-brand-purple hover:bg-[#7C3AED]/5",
+      btnText: "Create Candidate Account",
+      route: "/signup/candidate",
       capabilities: [
-        "Request genuine credentials from universities",
-        "Build automated AI resumes in seconds",
-        "Share custom verification codes on profiles",
-        "Verify professional integrity instantly"
-      ],
-      btnText: "Create Candidate Profile"
+        "Request & store academic credentials",
+        "Build verifiable interactive resumes",
+        "Share tamper-proof public profile links",
+        "No-fee blockchain anchor verification"
+      ]
     },
     {
       id: "issuer",
-      badge: "ISSUER CENTRAL",
-      badgeColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-      topBorder: "border-t-[4px] border-t-emerald-500",
-      icon: Landmark,
+      topBorder: "border-t-[3px] border-t-accent-green",
+      tag: "ISSUER CENTRAL",
+      tagStyle: "bg-[#10B981]/15 text-accent-green",
+      icon: <GraduationCap className="w-5 h-5 text-txt-muted" />,
       title: "Universities & Academies",
-      desc: "Become a trusted credential anchor. Automatically approve request logs, issue electronic qualifications, and eliminate manual registrar verification loops.",
+      body: "Become a trusted credential anchor. Approve student requests. Issue electronic qualifications backed by blockchain proof.",
+      colorClass: "text-accent-green",
+      btnBorder: "border-accent-green hover:bg-[#10B981]/5",
+      btnText: "Register as Issuer",
+      route: "/signup/issuer",
       capabilities: [
-        "AI-assisted document structure parser",
-        "Approve candidate credential requests",
-        "Secure digital credential signatures",
-        "Reduce manual verification paperwork"
-      ],
-      btnText: "Open Issuer Dashboard"
+        "Establish digital signature authority",
+        "Batch upload student transcripts",
+        "Approve and mint secure records",
+        "Direct candidate credential sync"
+      ]
     },
     {
       id: "verifier",
-      badge: "VERIFIER INTERFACE",
-      badgeColor: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
-      topBorder: "border-t-[4px] border-t-cyan-500",
-      icon: Building2,
+      topBorder: "border-t-[3px] border-t-accent-amber",
+      tag: "VERIFIER INTERFACE",
+      tagStyle: "bg-[#F59E0B]/15 text-accent-amber",
+      icon: <Briefcase className="w-5 h-5 text-txt-muted" />,
       title: "Employers & Recruiters",
-      desc: "Reduce hiring friction. Find premium talent backed strictly by verified competency audits, complete degree checks, and instant QR verification codes.",
+      body: "Verify any credential instantly. No back-and-forth. No waiting. One query returns a cryptographic confirmation from the Solana ledger.",
+      colorClass: "text-accent-amber",
+      btnBorder: "border-accent-amber hover:bg-[#F59E0B]/5",
+      btnText: "Register as Verifier",
+      route: "/signup/verifier",
       capabilities: [
-        "Scan instant QR verification codes",
-        "Verify student profiles instantly",
-        "Reduce hiring friction & fraud checks",
-        "Fast-track verified talent to shortlists"
-      ],
-      btnText: "Access Verifier Desk"
+        "Instant QR-based verification scan",
+        "Bulk candidate pool CSV checking",
+        "Full Solana ledger state lookup",
+        "Verify without system registration"
+      ]
     }
   ];
 
   return (
-    <section id="who-it-for" className="relative py-20 md:py-32 bg-[#05050a] overflow-hidden">
-      {/* Dynamic background glow */}
-      <div className="absolute bottom-0 right-1/4 w-[350px] h-[350px] bg-emerald-950/10 rounded-full blur-[110px] pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="who-its-for" className="py-24 md:py-[120px] bg-bg-base overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-6">
         
         {/* Section Header */}
-        <div className="text-left max-w-2xl space-y-4 mb-16 md:mb-24">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/5 rounded-full">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-purple-400">Target Ecosystem</span>
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
-            Unified Ecosystem, Specialized UI
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-            CredChain connects candidates, institutions, and employers in a unified environment, with distinct workflows designed for clear goals.
-          </p>
+        <div className="text-center mb-16 flex flex-col items-center">
+          <FadeIn>
+            {/* Section Eyebrow (Centered but keeps the left-border rule style as required) */}
+            <div className="inline-flex items-center">
+              <div className="border-l-2 border-brand-purple pl-3 font-mono text-[11px] tracking-[0.1em] text-txt-muted uppercase mb-4 text-left">
+                TARGET ECOSYSTEM
+              </div>
+            </div>
+            
+            <h2 className="font-display text-white scale-2xl font-bold">
+              Unified Ecosystem. Specialized Access.
+            </h2>
+          </FadeIn>
         </div>
 
-        {/* Roles 3-Column Display */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {roles.map((role, i) => {
-            const Icon = role.icon;
-            return (
-              <motion.div
-                key={role.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.12 }}
-                className={`flex flex-col bg-[#111118] border border-white/5 rounded-2xl p-8 relative hover:-translate-y-1 transition-all duration-300 shadow-xl ${role.topBorder}`}
-              >
-                {/* Header Badge */}
-                <div className="flex justify-between items-start mb-6">
-                  <span className={`font-mono text-[9px] sm:text-[10px] font-semibold border px-3 py-1 rounded-full ${role.badgeColor}`}>
-                    {role.badge}
-                  </span>
-                  <div className="p-3 bg-white/5 border border-white/10 rounded-xl text-gray-300">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                </div>
-
-                {/* Info block */}
-                <div className="text-left space-y-3 flex-grow">
-                  <h3 className="text-xl font-display font-semibold text-white">
-                    {role.title}
-                  </h3>
-                  <p className="text-gray-400 text-xs sm:text-sm font-sans leading-relaxed min-h-[100px] sm:min-h-[80px]">
-                    {role.desc}
-                  </p>
-
-                  {/* Capabilities List */}
-                  <div className="pt-6 border-t border-white/5 space-y-3">
-                    <span className="font-mono text-[10px] tracking-widest text-gray-500 block">
-                      CAPABILITIES // FEATURED
+        {/* Roles 3-Column Display - aligned stretch for equal height */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          {cards.map((card, idx) => (
+            <div key={card.id} className="flex h-full">
+              <FadeIn delay={100 + idx * 50}>
+                <div className={`bg-bg-surface border border-border-main ${card.topBorder} rounded-lg p-8 flex flex-col justify-between h-full shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] hover:translate-y-[-2px] transition-all`}>
+                  
+                  {/* Tag & Icon Row */}
+                  <div className="flex justify-between items-center mb-6">
+                    <span className={`font-mono text-[10px] font-semibold tracking-wider rounded-sm px-2.5 py-1 ${card.tagStyle}`}>
+                      {card.tag}
                     </span>
-                    <ul className="space-y-2.5">
-                      {role.capabilities.map((cap, j) => (
-                        <li key={j} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-300">
-                          <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    {card.icon}
+                  </div>
+
+                  {/* Title & Body */}
+                  <div className="text-left flex-grow">
+                    <h3 className="font-display text-white text-[20px] font-bold mb-3">
+                      {card.title}
+                    </h3>
+                    <p className="font-sans text-txt-secondary scale-sm leading-relaxed mb-6">
+                      {card.body}
+                    </p>
+
+                    {/* Checkmark capability points */}
+                    <ul className="space-y-3 pt-6 border-t border-border-subtle mb-8">
+                      {card.capabilities.map((cap, cIdx) => (
+                        <li key={cIdx} className="flex items-start gap-3 text-[13px] text-txt-secondary">
+                          <Check className={`w-4 h-4 ${card.colorClass} flex-shrink-0 mt-0.5`} />
                           <span>{cap}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                </div>
 
-                {/* Direct Demo Trigger CTA */}
-                <div className="pt-8 mt-6 border-t border-white/5">
-                  <button
-                    onClick={() => onOpenDemo(role.id as any)}
-                    className="w-full py-3.5 px-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white font-medium text-sm transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <span>{role.btnText}</span>
-                  </button>
-                </div>
+                  {/* CTA Button */}
+                  <div className="pt-6 border-t border-border-subtle w-full">
+                    <button
+                      onClick={() => navigate(card.route)}
+                      className={`w-full py-3 px-4 bg-transparent border ${card.btnBorder} text-txt-primary rounded-md font-semibold text-sm transition-colors cursor-pointer text-center`}
+                    >
+                      {card.btnText}
+                    </button>
+                  </div>
 
-              </motion.div>
-            );
-          })}
+                </div>
+              </FadeIn>
+            </div>
+          ))}
         </div>
+
       </div>
     </section>
   );

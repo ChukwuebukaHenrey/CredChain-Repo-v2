@@ -4,24 +4,47 @@
  */
 
 import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import StatsBar from "./components/StatsBar";
 import HowItWorks from "./components/HowItWorks";
 import Features from "./components/Features";
 import WhoItsFor from "./components/WhoItsFor";
 import ProofSection from "./components/ProofSection";
 import CTASection from "./components/CTASection";
 import Footer from "./components/Footer";
-import SignUpView from "./components/SignUpView";
+import RoleSelection from "./pages/RoleSelection";
+import Login from "./pages/Login";
+import SignupCandidate from "./pages/SignupCandidate";
+import SignupIssuer from "./pages/SignupIssuer";
+import SignupVerifier from "./pages/SignupVerifier";
+import CandidateDashboard from "./pages/CandidateDashboard";
+import IssuerDashboard from "./pages/IssuerDashboard";
+import VerifierDashboard from "./pages/VerifierDashboard";
+import PublicProfile from "./pages/PublicProfile";
 import { Credential } from "./types";
 
+function Landing() {
+  return (
+    <div className="relative min-h-screen bg-bg-base text-white">
+      <Navbar />
+      <Hero />
+      <HowItWorks />
+      <ProofSection />
+      <WhoItsFor />
+      <Features />
+      <CTASection />
+      <Footer />
+    </div>
+  );
+}
+
 export default function App() {
-  const [credentials, setCredentials] = useState<Credential[]>([
+  const [credentials] = useState<Credential[]>([
     {
       id: "default-1",
-      candidateName: "Elena Rostova",
-      institution: "Federal Institute of Engineering",
+      candidateName: "Emeka Obi",
+      institution: "Federal University of Technology Owerri",
       credentialTitle: "B.Eng in Computer Engineering",
       gpaOrHonors: "4.0 GPA (First Class)",
       issueDate: "June 2026",
@@ -56,53 +79,23 @@ export default function App() {
     }
   ]);
 
-  const [currentView, setCurrentView] = useState<'landing' | 'signup'>('landing');
-  const [selectedRole, setSelectedRole] = useState<'candidate' | 'issuer' | 'verifier'>('candidate');
-
-  const handleOpenDemo = (role: 'candidate' | 'issuer' | 'verifier' = 'candidate') => {
-    setSelectedRole(role);
-    setCurrentView('signup');
-  };
-
-  const latestCredential = credentials[0];
-
-  if (currentView === 'signup') {
-    return (
-      <SignUpView 
-        onBack={() => setCurrentView('landing')} 
-        initialRole={selectedRole} 
-      />
-    );
-  }
-
   return (
-    <div className="relative min-h-screen bg-[#05050a] text-white">
-      {/* Sticky Top-level Navbar */}
-      <Navbar onOpenDemo={handleOpenDemo} />
-
-      {/* Hero Header Presentation */}
-      <Hero onOpenDemo={handleOpenDemo} latestCredential={latestCredential} />
-
-      {/* Global Ledger Stats Block */}
-      <StatsBar issuedCount={credentials.length} />
-
-      {/* Core Operational Method: 3 steps */}
-      <HowItWorks />
-
-      {/* 3x2 Grid of Capabilities */}
-      <Features />
-
-      {/* Who it's For Section with action blocks */}
-      <WhoItsFor onOpenDemo={handleOpenDemo} />
-
-      {/* Permanent Proof Comparison Display */}
-      <ProofSection latestCredential={latestCredential} />
-
-      {/* Central Interactive Call To Action */}
-      <CTASection onOpenDemo={handleOpenDemo} />
-
-      {/* Clean Aesthetic Footer */}
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/role" element={<RoleSelection />} />
+        <Route path="/signup/candidate" element={<SignupCandidate />} />
+        <Route path="/signup/issuer" element={<SignupIssuer />} />
+        <Route path="/signup/verifier" element={<SignupVerifier />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<CandidateDashboard />} />
+        <Route path="/dashboard/candidate" element={<CandidateDashboard />} />
+        <Route path="/issuer" element={<IssuerDashboard />} />
+        <Route path="/dashboard/issuer" element={<IssuerDashboard />} />
+        <Route path="/verifier" element={<VerifierDashboard />} />
+        <Route path="/dashboard/verifier" element={<VerifierDashboard />} />
+        <Route path="/verify/:candidateId" element={<PublicProfile />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

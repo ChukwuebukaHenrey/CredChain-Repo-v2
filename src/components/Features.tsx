@@ -1,126 +1,146 @@
-import { motion } from "motion/react";
-import { Brain, Link, Wallet, QrCode, Sparkles, Search } from "lucide-react";
+import { Brain, QrCode, Archive, Sparkles, User, FileSpreadsheet } from "lucide-react";
+import FadeIn from "./FadeIn";
 
 export default function Features() {
-  const features = [
-    {
-      id: "feat-1",
-      icon: Brain,
-      label: "VISION AI INTERACTIVE CORE",
-      title: "AI Document Processing",
-      desc: "Instantly parse transcripts and diplomas with our multi-modal model. It maps complex text structures and outputs clean schemas for approval.",
-      badge: "Gemini Engine Supported"
-    },
-    {
-      id: "feat-2",
-      icon: QrCode,
-      label: "LIGHTNING RESPONSE",
-      title: "QR Verification",
-      desc: "Scan a QR code to fetch immediate verification of authenticity stored on Solana. Zero registration required.",
-      badge: "Instant Access"
-    },
-    {
-      id: "feat-3",
-      icon: Wallet,
-      label: "CANDIDATE PORTFOLIO",
-      title: "Credential Portfolio",
-      desc: "Own your verified achievements. A digital portfolio where candidates collect and display certified credentials issued by trusted academies.",
-      badge: "Verified Profile"
-    },
-    {
-      id: "feat-4",
-      icon: Link,
-      label: "GLOBAL OPPORTUNITIES",
-      title: "Public Profiles",
-      desc: "Share a beautiful, public-facing professional page displaying all verified credentials with custom secure review links.",
-      badge: "Verified Showcase"
-    },
-    {
-      id: "feat-5",
-      icon: Sparkles,
-      label: "PROVEN COMPETENCY",
-      title: "AI Resume Builder",
-      desc: "Build verified resumes directly from credentials issued by authorized schools. Let your background tell a credible story.",
-      badge: "100% Genuine Output"
-    },
-    {
-      id: "feat-6",
-      icon: Search,
-      label: "REDUCED FRICTION",
-      title: "Employer Verification",
-      desc: "Employers instantly check credentials down to the block depth without tedious paperwork, emails, or waiting queues.",
-      badge: "Fast Recruit Funnel"
-    }
-  ];
-
   return (
-    <section id="features" className="relative py-20 md:py-32 bg-[#08080f] overflow-hidden">
-      {/* Visual neon light strip */}
-      <div className="absolute top-0 right-0 w-[500px] h-[1px] bg-gradient-to-l from-purple-500/20 to-transparent"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="features" className="py-24 md:py-[120px] bg-bg-base overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-6">
         
         {/* Section Header */}
-        <div className="text-left max-w-2xl space-y-4 mb-16 md:mb-24">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/5 rounded-full">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-purple-400">Core Capabilities</span>
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
-            Forged for Modern Credential Trust
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-            Eliminate tedious manual inspection. CredChain operates a fully automated, cryptographically secure verification pipeline with high-end developer primitives.
-          </p>
+        <div className="text-left mb-16 max-w-2xl">
+          <FadeIn>
+            <div className="border-l-2 border-brand-purple pl-3 font-mono text-[11px] tracking-[0.1em] text-txt-muted uppercase mb-4">
+              CORE CAPABILITIES
+            </div>
+            <h2 className="font-display text-white scale-2xl font-bold">
+              Built for the entire credential lifecycle.
+            </h2>
+          </FadeIn>
         </div>
 
-        {/* 3x2 Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {features.map((feature, i) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.id}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: i * 0.08 }}
-                className="group relative bg-[#111118]/60 hover:bg-[#111118] border border-white/5 hover:border-purple-500/15 rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(124,58,253,0.06)] flex flex-col items-start justify-between min-h-[280px]"
-              >
-                {/* Visual side highlights */}
-                <div className="absolute top-6 left-0 w-1 h-12 bg-purple-500 rounded-r opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* Feature Grid — NOT all identical grid layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          {/* Card 1 — Standard */}
+          <FadeIn delay={100}>
+            <div className="bg-bg-surface border border-border-main rounded-lg p-8 h-full flex flex-col justify-between shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all min-h-[220px]">
+              <div className="space-y-4 text-left">
+                <Brain className="w-6 h-6 text-txt-muted" />
+                <h3 className="font-display text-white text-[18px] font-bold">
+                  AI Document Processing
+                </h3>
+                <p className="font-sans text-txt-secondary scale-sm leading-relaxed">
+                  Transcripts and diplomas parsed by multi-modal AI. Clean structured output, ready for approval.
+                </p>
+              </div>
+              <div className="font-mono text-[10px] text-txt-muted mt-6 uppercase tracking-wider">
+                // VISION AI
+              </div>
+            </div>
+          </FadeIn>
 
-                <div className="space-y-4 w-full text-left">
-                  {/* Icon Panel */}
-                  <div className="p-3 bg-white/5 border border-white/10 rounded-xl inline-flex group-hover:bg-purple-500/10 group-hover:border-purple-500/30 transition-colors">
-                    <Icon className="w-5 h-5 text-gray-300 group-hover:text-purple-400 transition-colors" />
+          {/* Card 2 — Standard */}
+          <FadeIn delay={150}>
+            <div className="bg-bg-surface border border-border-main rounded-lg p-8 h-full flex flex-col justify-between shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all min-h-[220px]">
+              <div className="space-y-4 text-left">
+                <QrCode className="w-6 h-6 text-txt-muted" />
+                <h3 className="font-display text-white text-[18px] font-bold">
+                  QR Verification
+                </h3>
+                <p className="font-sans text-txt-secondary scale-sm leading-relaxed">
+                  Scan any CredChain QR code for instant on-chain confirmation. Zero registration required.
+                </p>
+              </div>
+              <div className="font-mono text-[10px] text-txt-muted mt-6 uppercase tracking-wider">
+                // LIGHTNING RESPONSE
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Card 3 — Standard */}
+          <FadeIn delay={200}>
+            <div className="bg-bg-surface border border-border-main rounded-lg p-8 h-full flex flex-col justify-between shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all min-h-[220px]">
+              <div className="space-y-4 text-left">
+                <Archive className="w-6 h-6 text-txt-muted" />
+                <h3 className="font-display text-white text-[18px] font-bold">
+                  Credential Vault
+                </h3>
+                <p className="font-sans text-txt-secondary scale-sm leading-relaxed">
+                  Every verified credential in one place. Owned by the candidate, not the institution.
+                </p>
+              </div>
+              <div className="font-mono text-[10px] text-txt-muted mt-6 uppercase tracking-wider">
+                // CANDIDATE PORTFOLIO
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Row 2 - Wide Card 4 (AI Resume Builder) */}
+          <div className="lg:col-span-2 lg:row-span-2">
+            <FadeIn delay={250}>
+              <div className="bg-bg-surface border border-border-main rounded-lg p-8 h-full flex flex-col justify-between shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all min-h-[300px] lg:min-h-0">
+                <div className="space-y-6 text-left">
+                  <div className="flex items-center gap-4">
+                    <Sparkles className="w-8 h-8 text-txt-muted flex-shrink-0" />
+                    <div>
+                      <h3 className="font-display text-white text-[24px] font-bold">
+                        AI Resume Builder
+                      </h3>
+                      <div className="font-mono text-[10px] text-txt-muted uppercase tracking-wider mt-1">
+                        // PROVEN COMPETENCY
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="space-y-1.5">
-                    <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 tracking-widest block uppercase">
-                      {feature.label}
-                    </span>
-                    <h3 className="text-lg font-display font-semibold text-white group-hover:text-purple-300 transition-colors">
-                      {feature.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-gray-400 text-xs sm:text-sm font-sans leading-relaxed">
-                    {feature.desc}
+                  <p className="font-sans text-txt-secondary scale-base leading-relaxed max-w-xl">
+                    Build a verified resume directly from your on-chain credentials. Every claim backed by institutional proof. Share with a link or export as PDF.
                   </p>
                 </div>
-
-                <div className="mt-8 pt-4 border-t border-white/5 w-full flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-gray-500">
-                    // PLATFORM PRÉCIS
-                  </span>
-                  <span className="font-mono text-[10px] text-teal-400 bg-teal-400/5 px-2.5 py-0.5 border border-teal-500/10 rounded-full">
-                    {feature.badge}
-                  </span>
+                <div className="border-t border-border-subtle pt-6 mt-6 flex items-center justify-between text-txt-muted text-[11px] font-mono">
+                  <span>SECURED CREDENTIAL MAPPING SYSTEM</span>
+                  <span className="text-accent-cyan">STABLE MINT V1.0</span>
                 </div>
-              </motion.div>
-            );
-          })}
+              </div>
+            </FadeIn>
+          </div>
+
+          {/* Card 5 — Narrow (Public Profiles) */}
+          <FadeIn delay={300}>
+            <div className="bg-bg-surface border border-border-main rounded-lg p-8 h-full flex flex-col justify-between shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all min-h-[200px]">
+              <div className="space-y-4 text-left">
+                <User className="w-6 h-6 text-txt-muted" />
+                <h3 className="font-display text-white text-[18px] font-bold">
+                  Public Profiles
+                </h3>
+                <p className="font-sans text-txt-secondary scale-sm leading-relaxed">
+                  A candidate-facing profile page showing all verified credentials with shareable QR links.
+                </p>
+              </div>
+              <div className="font-mono text-[10px] text-txt-muted mt-6 uppercase tracking-wider">
+                // GLOBAL OPPORTUNITIES
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Card 6 — Narrow (Employer Verification) */}
+          <FadeIn delay={350}>
+            <div className="bg-bg-surface border border-border-main rounded-lg p-8 h-full flex flex-col justify-between shadow-[0_1px_3px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all min-h-[200px]">
+              <div className="space-y-4 text-left">
+                <FileSpreadsheet className="w-6 h-6 text-txt-muted" />
+                <h3 className="font-display text-white text-[18px] font-bold">
+                  Employer Verification
+                </h3>
+                <p className="font-sans text-txt-secondary scale-sm leading-relaxed">
+                  Bulk verify candidate pools via CSV upload. Instant results against the Solana ledger.
+                </p>
+              </div>
+              <div className="font-mono text-[10px] text-txt-muted mt-6 uppercase tracking-wider">
+                // REDUCED FRICTION
+              </div>
+            </div>
+          </FadeIn>
+
         </div>
+
       </div>
     </section>
   );
