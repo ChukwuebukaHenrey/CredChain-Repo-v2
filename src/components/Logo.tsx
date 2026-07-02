@@ -1,51 +1,54 @@
-import React from "react";
-import { ShieldCheck } from "lucide-react";
-
 interface LogoProps {
   className?: string;
   iconSize?: number;
   showWordmark?: boolean;
   wordmarkSize?: "sm" | "md" | "lg";
+  /** Deprecated. Tagline is no longer shown per design spec. */
   tagline?: string;
 }
 
 export default function Logo({
   className = "",
-  iconSize = 38,
+  iconSize = 28,
   showWordmark = true,
   wordmarkSize = "md",
-  tagline = "Verified Credentials on Solana",
 }: LogoProps) {
-  const boxSize = wordmarkSize === "sm" ? 30 : wordmarkSize === "lg" ? 46 : iconSize || 38;
+  const boxSize = wordmarkSize === "sm" ? 24 : wordmarkSize === "lg" ? 36 : iconSize;
+  const textClass =
+    wordmarkSize === "sm" ? "text-[15px]" : wordmarkSize === "lg" ? "text-[22px]" : "text-[18px]";
 
   return (
-    <div className={`inline-flex items-center gap-3 select-none font-display ${className}`}>
-      <div
-        style={{ width: boxSize, height: boxSize }}
-        className="rounded-xl bg-gradient-to-tr from-[#00f5ff] via-[#7c3aed] to-[#ff00a0] p-[2px] shadow-[0_0_20px_rgba(124,58,253,0.5)] flex-shrink-0 transition-transform hover:scale-105"
+    <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
+      <svg
+        width={boxSize}
+        height={boxSize}
+        viewBox="0 0 28 28"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="flex-shrink-0"
       >
-        <div className="w-full h-full bg-[#05050a] rounded-[10px] flex items-center justify-center">
-          <ShieldCheck className="w-3/5 h-3/5 text-[#00f5ff]" />
-        </div>
-      </div>
+        <rect width="28" height="28" rx="6" fill="var(--brand-purple)" />
+        <path
+          d="M14 6L20 9.5V15.5L14 19L8 15.5V9.5L14 6Z"
+          stroke="var(--role-candidate)"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M11 12.5L13 14.5L17 10.5"
+          stroke="#FFFFFF"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
       {showWordmark && (
-        <div className="flex flex-col justify-center text-left">
-          <span
-            className={`font-extrabold tracking-tight text-white leading-none ${
-              wordmarkSize === "sm" ? "text-[18px]" : wordmarkSize === "lg" ? "text-3xl" : "text-[23px]"
-            }`}
-          >
-            Cred<span className="text-[#00f5ff]">Chain</span>
-          </span>
-          {tagline && wordmarkSize !== "sm" && (
-            <span className="text-[10px] font-mono tracking-wider uppercase text-[#00f5ff] font-semibold mt-1 block">
-              {tagline}
-            </span>
-          )}
-        </div>
+        <span
+          className={`font-display font-semibold tracking-tight leading-none text-txt-primary ${textClass}`}
+        >
+          CredChain
+        </span>
       )}
     </div>
   );
 }
-
-

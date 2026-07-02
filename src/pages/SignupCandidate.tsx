@@ -1,34 +1,33 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, User, CheckCircle2, Plus, X, LogIn } from "lucide-react";
-import Logo from "../components/Logo";
-import AuthLeftPanel from "../components/AuthLeftPanel";
+import { X, CheckCircle2 } from "lucide-react";
+import AuthScreen from "../components/AuthScreen";
+import { StepHeader, StepNav, Field, SelectField } from "./SignupVerifier";
 
 export default function SignupCandidate() {
   const [submitted, setSubmitted] = useState(false);
   const [step, setStep] = useState(1);
   const totalSteps = 3;
 
-  // Step 1 Form Fields
+  // Step 1
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Step 2 Form Fields
+  // Step 2
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("");
   const [nationality, setNationality] = useState("");
   const [bio, setBio] = useState("");
 
-  // Step 3 Form Fields
+  // Step 3
   const [institution, setInstitution] = useState("");
   const [studentId, setStudentId] = useState("");
   const [fieldOfStudy, setFieldOfStudy] = useState("");
   const [graduationYear, setGraduationYear] = useState("");
   const [linkedInUrl, setLinkedInUrl] = useState("");
 
-  // Skills tag input
   const [skillInput, setSkillInput] = useState("");
   const [skills, setSkills] = useState<string[]>(["React", "TypeScript", "Solidity"]);
 
@@ -42,421 +41,195 @@ export default function SignupCandidate() {
     }
   };
 
-  const handleRemoveSkill = (skillToRemove: string) => {
-    setSkills(skills.filter((s) => s !== skillToRemove));
-  };
+  const handleRemoveSkill = (s: string) => setSkills(skills.filter((x) => x !== s));
 
   const handleNextStep = () => {
-    if (step === 1) {
-      if (!fullName || !email || !password) {
-        alert("Please fill in Full Name, Email, and Password.");
-        return;
-      }
+    if (step === 1 && (!fullName || !email || !password)) {
+      alert("Please fill in Full Name, Email, and Password.");
+      return;
     }
-    if (step < totalSteps) {
-      setStep(step + 1);
-    }
+    if (step < totalSteps) setStep(step + 1);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const userData = {
-      fullName,
-      phone,
-      email,
-      dob,
-      gender,
-      nationality,
-      bio,
-      institution,
-      studentId,
-      fieldOfStudy,
-      graduationYear,
-      skills,
-      linkedInUrl,
-      role: "candidate",
-    };
-    localStorage.setItem("cc_user", JSON.stringify(userData));
+    localStorage.setItem(
+      "cc_user",
+      JSON.stringify({
+        fullName,
+        phone,
+        email,
+        dob,
+        gender,
+        nationality,
+        bio,
+        institution,
+        studentId,
+        fieldOfStudy,
+        graduationYear,
+        skills,
+        linkedInUrl,
+        role: "candidate",
+      })
+    );
     localStorage.setItem("credchain_role", "candidate");
     setSubmitted(true);
   };
 
   const stepTitle = step === 1 ? "Basic info" : step === 2 ? "Personal details" : "Academic & skills";
 
-  return (
-    <div className="min-h-screen bg-[#05050a] text-white flex flex-col justify-between p-4 sm:p-6 lg:p-8 relative select-none">
-      {/* Mobile Top Header (< 900px) */}
-      <header className="max-w-7xl w-full mx-auto block min-[900px]:hidden">
-        <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
-          <Logo iconSize={36} showWordmark={true} wordmarkSize="md" />
-        </Link>
-      </header>
-
-      {/* Centered Main Content Area */}
-      <main className="flex-1 flex items-center justify-center my-6 w-full">
-        {/* =========================================================================
-            DESKTOP TWO-PANEL SAAS CONTAINER (min-width: 900px)
-        ========================================================================= */}
-        <div className="hidden min-[900px]:flex w-[88vw] max-w-[1580px] h-[86vh] max-h-[940px] min-h-[660px] bg-[#0d0718] border border-white/10 rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.9)]">
-          <AuthLeftPanel role="candidate" currentStep={step} totalSteps={totalSteps} />
-
-          <div className="w-[55%] bg-[#10091d] p-10 lg:p-14 xl:p-16 flex flex-col justify-between text-left relative overflow-y-auto h-full">
-            {submitted ? (
-              <div className="py-20 text-center space-y-8 animate-fade-in my-auto font-sans">
-                <div className="w-20 h-20 bg-purple-500/15 border border-purple-500/40 rounded-full flex items-center justify-center mx-auto text-purple-400 shadow-[0_0_40px_rgba(168,85,247,0.4)]">
-                  <CheckCircle2 className="w-10 h-10" />
-                </div>
-                <div className="space-y-3">
-                  <h1 className="font-display text-3xl lg:text-4xl font-bold text-white">
-                    Account created. Welcome to CredChain.
-                  </h1>
-                  <p className="text-gray-400 text-sm sm:text-base">
-                    Your candidate identity structure for <span className="text-cyan-400 font-mono">{fullName || email}</span> is ready.
-                  </p>
-                </div>
-                <div className="pt-6 flex justify-center gap-4">
-                  <Link
-                    to="/dashboard"
-                    className="px-8 py-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm sm:text-base transition-all shadow-lg cursor-pointer"
-                  >
-                    Enter Candidate Vault →
-                  </Link>
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between">
-                <div>
-                  {/* Step Progress Header */}
-                  <div className="flex items-center justify-between mb-6 border-b border-white/5 pb-4">
-                    <span className="text-xs font-mono font-semibold text-gray-400">
-                      Step {step} of {totalSteps} — <span className="text-cyan-400">{stepTitle}</span>
-                    </span>
-                    <div className="w-40 h-2 bg-white/10 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-purple-500 transition-all duration-300 rounded-full shadow-[0_0_10px_rgba(168,85,247,0.6)]"
-                        style={{ width: `${(step / totalSteps) * 100}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Form Header */}
-                  <div className="mb-8 space-y-1.5">
-                    <h1 className="font-display text-3xl lg:text-4xl font-bold tracking-tight text-white">
-                      Create account
-                    </h1>
-                    <p className="text-sm text-gray-400 font-sans">
-                      Already have one?{" "}
-                      <Link to="/login?role=candidate" className="text-purple-400 font-semibold hover:underline">
-                        Sign in
-                      </Link>
-                    </p>
-                  </div>
-
-                  {/* STEP 1 FIELDS */}
-                  {step === 1 && (
-                    <div className="space-y-4 animate-fade-in font-mono text-xs">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-semibold text-gray-400 uppercase">Full name *</label>
-                          <input
-                            type="text"
-                            required
-                            value={fullName}
-                            onChange={(e) => setFullName(e.target.value)}
-                            placeholder="Emeka Obi"
-                            className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                          />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-semibold text-gray-400 uppercase">Phone number</label>
-                          <input
-                            type="tel"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            placeholder="+234 ···"
-                            className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <label className="text-[10px] font-semibold text-gray-400 uppercase block">Email address *</label>
-                        <input
-                          type="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="name@example.com"
-                          className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                        />
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <label className="text-[10px] font-semibold text-gray-400 uppercase block">Password *</label>
-                        <input
-                          type="password"
-                          required
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          placeholder="Min. 8 characters"
-                          className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* STEP 2 FIELDS */}
-                  {step === 2 && (
-                    <div className="space-y-4 animate-fade-in font-mono text-xs">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-semibold text-gray-400 uppercase">Date of Birth</label>
-                          <input
-                            type="date"
-                            value={dob}
-                            onChange={(e) => setDob(e.target.value)}
-                            className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-purple-500"
-                          />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-semibold text-gray-400 uppercase">Gender</label>
-                          <select
-                            value={gender}
-                            onChange={(e) => setGender(e.target.value)}
-                            className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-purple-500"
-                          >
-                            <option value="">Select gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="non-binary">Non-binary</option>
-                            <option value="prefer-not-to-say">Prefer not to say</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <label className="text-[10px] font-semibold text-gray-400 uppercase block">Nationality</label>
-                        <input
-                          type="text"
-                          value={nationality}
-                          onChange={(e) => setNationality(e.target.value)}
-                          placeholder="e.g. Nigerian, British, Canadian"
-                          className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                        />
-                      </div>
-
-                      <div className="space-y-1.5 font-sans">
-                        <label className="text-[10px] font-mono font-semibold text-gray-400 uppercase block">Professional Bio</label>
-                        <textarea
-                          rows={3}
-                          value={bio}
-                          onChange={(e) => setBio(e.target.value)}
-                          placeholder="Brief summary of your academic or engineering background..."
-                          className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 resize-none font-sans"
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* STEP 3 FIELDS */}
-                  {step === 3 && (
-                    <div className="space-y-4 animate-fade-in font-mono text-xs">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-semibold text-gray-400 uppercase">Institution (Opt)</label>
-                          <input
-                            type="text"
-                            value={institution}
-                            onChange={(e) => setInstitution(e.target.value)}
-                            placeholder="e.g. FUTO, MIT, Oxford"
-                            className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                          />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-semibold text-gray-400 uppercase">Student ID (Opt)</label>
-                          <input
-                            type="text"
-                            value={studentId}
-                            onChange={(e) => setStudentId(e.target.value)}
-                            placeholder="e.g. 2021104523"
-                            className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-semibold text-gray-400 uppercase">Field of Study</label>
-                          <input
-                            type="text"
-                            value={fieldOfStudy}
-                            onChange={(e) => setFieldOfStudy(e.target.value)}
-                            placeholder="Computer Science"
-                            className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                          />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-semibold text-gray-400 uppercase">Graduation Year</label>
-                          <input
-                            type="text"
-                            value={graduationYear}
-                            onChange={(e) => setGraduationYear(e.target.value)}
-                            placeholder="2025"
-                            className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Skills Tag Input */}
-                      <div className="space-y-1.5 font-sans">
-                        <label className="text-[10px] font-mono font-semibold text-gray-400 uppercase block">Skills (Press Enter to add)</label>
-                        <div className="w-full bg-[#0a0515] border border-white/10 rounded-xl p-2 focus-within:border-purple-500 flex flex-wrap gap-1.5 min-h-[44px]">
-                          {skills.map((s, i) => (
-                            <span key={i} className="inline-flex items-center gap-1 bg-purple-500/20 text-purple-300 text-[11px] px-2 py-0.5 rounded-md font-mono border border-purple-500/30">
-                              <span>{s}</span>
-                              <button type="button" onClick={() => handleRemoveSkill(s)} className="hover:text-white cursor-pointer"><X className="w-3 h-3" /></button>
-                            </span>
-                          ))}
-                          <input
-                            type="text"
-                            value={skillInput}
-                            onChange={(e) => setSkillInput(e.target.value)}
-                            onKeyDown={handleAddSkill}
-                            placeholder={skills.length === 0 ? "Type skill & enter..." : ""}
-                            className="bg-transparent border-none outline-none text-xs text-white placeholder-gray-600 flex-1 min-w-[120px] px-1 font-mono"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <label className="text-[10px] font-semibold text-gray-400 uppercase block">LinkedIn URL (Opt)</label>
-                        <input
-                          type="url"
-                          value={linkedInUrl}
-                          onChange={(e) => setLinkedInUrl(e.target.value)}
-                          placeholder="https://linkedin.com/in/username"
-                          className="w-full bg-[#0a0515] border border-white/10 rounded-xl px-3.5 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Bottom Navigation Buttons */}
-                <div className="flex gap-3 mt-8 pt-4 border-t border-white/5 font-sans">
-                  {step > 1 ? (
-                    <button
-                      type="button"
-                      onClick={() => setStep(step - 1)}
-                      className="flex-1 py-3 px-4 bg-transparent border border-white/10 rounded-xl text-xs font-semibold text-gray-300 hover:text-white hover:border-white/25 transition-all cursor-pointer"
-                    >
-                      Back
-                    </button>
-                  ) : (
-                    <Link
-                      to="/role"
-                      className="flex-1 py-3 px-4 bg-transparent border border-white/10 rounded-xl text-xs font-semibold text-gray-400 hover:text-white hover:border-white/25 transition-all text-center flex items-center justify-center"
-                    >
-                      Cancel
-                    </Link>
-                  )}
-
-                  {step < totalSteps ? (
-                    <button
-                      type="button"
-                      onClick={handleNextStep}
-                      className="flex-[2] py-3 px-4 bg-purple-600 hover:bg-purple-500 rounded-xl text-xs font-bold text-white transition-all shadow-lg cursor-pointer flex items-center justify-center gap-1.5"
-                    >
-                      <span>Continue</span>
-                      <span>→</span>
-                    </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      className="flex-[2] py-3 px-4 bg-purple-600 hover:bg-purple-500 rounded-xl text-xs font-bold text-white transition-all shadow-lg cursor-pointer flex items-center justify-center gap-1.5"
-                    >
-                      <span>Complete Registration</span>
-                    </button>
-                  )}
-                </div>
-              </form>
-            )}
+  if (submitted) {
+    return (
+      <AuthScreen role="candidate" currentStep={step} totalSteps={totalSteps}>
+        <div className="py-12 text-center space-y-6 my-auto">
+          <div className="w-14 h-14 rounded-md bg-role-candidate-soft border border-border-main text-role-candidate flex items-center justify-center mx-auto">
+            <CheckCircle2 className="w-7 h-7" strokeWidth={1.75} />
+          </div>
+          <div className="space-y-3">
+            <h1 className="font-display text-2xl lg:text-3xl font-bold text-txt-primary">
+              Welcome to CredChain.
+            </h1>
+            <p className="text-txt-secondary text-sm max-w-md mx-auto">
+              Your candidate vault is live. We've sent a confirmation to{" "}
+              <span className="text-txt-primary font-mono">{email}</span>.
+            </p>
+          </div>
+          <div className="pt-4 flex justify-center gap-3">
+            <Link
+              to="/"
+              className="px-5 py-2.5 rounded-md border border-border-main hover:border-border-strong text-txt-primary font-semibold text-sm transition-colors"
+            >
+              Return Home
+            </Link>
+            <Link
+              to="/dashboard"
+              className="px-5 py-2.5 rounded-md bg-brand-purple hover:bg-brand-purple-dim text-white font-semibold text-sm transition-colors"
+            >
+              Enter my vault
+            </Link>
           </div>
         </div>
+      </AuthScreen>
+    );
+  }
 
-        {/* =========================================================================
-            MOBILE / SINGLE-COLUMN CARD (< 900px)
-        ========================================================================= */}
-        <div className="block min-[900px]:hidden w-full max-w-md bg-[#111118] border border-white/5 rounded-2xl p-6 sm:p-10 shadow-2xl border-t-[4px] border-t-purple-600">
-          {submitted ? (
-            <div className="py-12 text-center space-y-6 animate-fade-in font-sans">
-              <div className="w-16 h-16 bg-purple-500/10 border border-purple-500/30 rounded-full flex items-center justify-center mx-auto text-purple-400">
-                <CheckCircle2 className="w-8 h-8" />
+  return (
+    <AuthScreen role="candidate" currentStep={step} totalSteps={totalSteps}>
+      <form onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between">
+        <div>
+          <StepHeader step={step} totalSteps={totalSteps} stepTitle={stepTitle} />
+
+          <div className="mb-8 space-y-2">
+            <h1 className="font-display text-2xl lg:text-3xl font-bold tracking-tight text-txt-primary">
+              Create candidate account.
+            </h1>
+            <p className="text-sm text-txt-secondary font-sans">
+              Already a candidate?{" "}
+              <Link
+                to="/login?role=candidate"
+                className="text-brand-purple font-semibold hover:text-txt-primary"
+              >
+                Sign in
+              </Link>
+            </p>
+          </div>
+
+          {step === 1 && (
+            <div className="space-y-4">
+              <Field label="FULL NAME *" value={fullName} onChange={setFullName} placeholder="Emeka Obi" required />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field label="PHONE" value={phone} onChange={setPhone} placeholder="+234 802 …" />
+                <Field label="EMAIL *" type="email" value={email} onChange={setEmail} placeholder="emeka@example.com" required />
               </div>
-              <div className="space-y-2">
-                <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
-                  Account created.
-                </h1>
-                <p className="text-gray-400 text-sm">
-                  Your candidate vault is ready.
-                </p>
+              <Field label="PASSWORD *" type="password" value={password} onChange={setPassword} placeholder="••••••••" required />
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field label="DATE OF BIRTH" type="date" value={dob} onChange={setDob} />
+                <SelectField
+                  label="GENDER"
+                  value={gender}
+                  onChange={setGender}
+                  options={[
+                    { value: "", label: "Prefer not to say" },
+                    { value: "female", label: "Female" },
+                    { value: "male", label: "Male" },
+                    { value: "non-binary", label: "Non-binary" },
+                  ]}
+                />
               </div>
-              <div className="pt-4 flex justify-center gap-4">
-                <Link
-                  to="/dashboard"
-                  className="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all shadow-lg"
-                >
-                  Enter Dashboard
-                </Link>
+              <Field label="NATIONALITY" value={nationality} onChange={setNationality} placeholder="Nigerian" />
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-mono font-semibold text-txt-muted uppercase tracking-wider block">
+                  SHORT BIO
+                </label>
+                <textarea
+                  rows={3}
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  placeholder="Frontend-leaning Software Engineering student passionate about verifiable web apps…"
+                  className="w-full bg-bg-sunken border border-border-main rounded-md px-4 py-3 text-sm text-txt-primary placeholder:text-txt-muted focus:outline-none focus:border-brand-purple transition-colors font-sans"
+                />
               </div>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6 text-left">
-              <div className="border-b border-white/5 pb-4 space-y-1">
-                <div className="flex items-center gap-2 text-purple-400 font-mono text-xs uppercase">
-                  <User className="w-4 h-4" />
-                  <span>Candidate Identity Anchor</span>
-                </div>
-                <h1 className="font-display text-2xl font-bold text-white">Candidate Sign Up</h1>
-                <p className="text-gray-400 text-xs font-sans">
-                  Create your decentralized vault to store academic proof & resumes.
-                </p>
-              </div>
+          )}
 
-              <div className="space-y-4 font-mono text-xs">
-                <div className="space-y-1">
-                  <label className="text-gray-400">FULL NAME *</label>
-                  <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Emeka Obi" className="w-full bg-[#08080f] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600" />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-gray-400">EMAIL ADDRESS *</label>
-                  <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" className="w-full bg-[#08080f] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600" />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-gray-400">PASSWORD *</label>
-                  <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Min. 8 characters" className="w-full bg-[#08080f] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600" />
+          {step === 3 && (
+            <div className="space-y-4">
+              <Field label="INSTITUTION" value={institution} onChange={setInstitution} placeholder="Federal University of Technology, Owerri" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field label="STUDENT ID / MATRIC" value={studentId} onChange={setStudentId} placeholder="2021/104256" />
+                <Field label="GRADUATION YEAR" value={graduationYear} onChange={setGraduationYear} placeholder="2026" />
+              </div>
+              <Field label="FIELD OF STUDY" value={fieldOfStudy} onChange={setFieldOfStudy} placeholder="B.Eng Computer Engineering" />
+              <Field label="LINKEDIN URL" type="url" value={linkedInUrl} onChange={setLinkedInUrl} placeholder="https://linkedin.com/in/yourname" />
+
+              <div className="space-y-2">
+                <label className="text-[11px] font-mono font-semibold text-txt-muted uppercase tracking-wider block">
+                  SKILLS
+                </label>
+                <input
+                  type="text"
+                  value={skillInput}
+                  onChange={(e) => setSkillInput(e.target.value)}
+                  onKeyDown={handleAddSkill}
+                  placeholder="Type a skill and press Enter"
+                  className="w-full bg-bg-sunken border border-border-main rounded-md px-4 py-3 text-sm text-txt-primary placeholder:text-txt-muted focus:outline-none focus:border-brand-purple transition-colors font-mono"
+                />
+                <div className="flex flex-wrap gap-1.5 pt-2">
+                  {skills.map((s) => (
+                    <span
+                      key={s}
+                      className="inline-flex items-center gap-1.5 px-2 py-1 rounded-sm border border-border-main bg-bg-surface text-role-candidate text-xs font-mono"
+                    >
+                      {s}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSkill(s)}
+                        className="text-txt-muted hover:text-hash-red"
+                        aria-label={`Remove ${s}`}
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ))}
                 </div>
               </div>
-
-              <button type="submit" className="w-full py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all shadow-lg font-sans">
-                Create Vault Account
-              </button>
-
-              <div className="pt-2 text-center text-xs text-gray-400 font-sans">
-                Already have an account? <Link to="/login?role=candidate" className="text-purple-400 font-semibold hover:underline">Sign in</Link>
-              </div>
-            </form>
+            </div>
           )}
         </div>
-      </main>
 
-      {/* Mobile Footer (< 900px) */}
-      <footer className="max-w-7xl w-full mx-auto pt-6 border-t border-white/5 block min-[900px]:hidden">
-        <Link to="/role" className="inline-flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-white transition-colors">
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to role selection</span>
-        </Link>
-      </footer>
-    </div>
+        <StepNav
+          step={step}
+          totalSteps={totalSteps}
+          onBack={() => setStep(step - 1)}
+          onNext={handleNextStep}
+          submitLabel="Create my vault"
+        />
+      </form>
+    </AuthScreen>
   );
 }

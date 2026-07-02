@@ -6,3 +6,8 @@ coverage/
 *.log
 .env*
 !.env.example
+.claude/
+
+# Pre-React-migration vanilla HTML/JS and superseded React components.
+# Kept on disk for review but untracked.
+_archive/

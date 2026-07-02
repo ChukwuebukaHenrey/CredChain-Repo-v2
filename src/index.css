@@ -1,44 +1,153 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
-@theme {
+/* ============================================================
+   Raw theme values — swap via [data-theme] on <html>
+   Dark is the canonical, designed theme.
+   Light values are STUBS for switch-wiring verification only.
+   ============================================================ */
+:root {
+  /* Surfaces */
+  --bg-base: #0a0510;
+  --bg-surface: #0f0a1a;
+  --bg-elevated: #160d24;
+  --bg-sunken: #07030d;
+
+  /* Borders */
+  --border-main: #1e1530;
+  --border-subtle: #150f22;
+  --border-strong: #2a1f44;
+
+  /* Brand */
+  --brand-purple: #7C3AED;
+  --brand-purple-dim: #4C1D95;
+  --brand-purple-soft: rgba(124, 58, 237, 0.12);
+
+  /* Role accents — semantic, never swap */
+  --role-candidate: #00D4FF;
+  --role-issuer: #10B981;
+  --role-verifier: #F59E0B;
+
+  --role-candidate-soft: rgba(0, 212, 255, 0.10);
+  --role-issuer-soft: rgba(16, 185, 129, 0.10);
+  --role-verifier-soft: rgba(245, 158, 11, 0.10);
+
+  /* Text */
+  --txt-primary: #FFFFFF;
+  --txt-secondary: #A89BC2;
+  --txt-muted: #6B5F7A;
+
+  /* Status hashes */
+  --hash-green: #22C55E;
+  --hash-red: #EF4444;
+}
+
+[data-theme="light"] {
+  /* TODO: design proper light palette. Stubs below verify the swap wiring only. */
+  --bg-base: #F7F6FB;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #F0EDF7;
+  --bg-sunken: #ECE9F2;
+
+  --border-main: #E2DDEC;
+  --border-subtle: #EFEBF5;
+  --border-strong: #CFC7DE;
+
+  --brand-purple: #6D28D9;
+  --brand-purple-dim: #A78BFA;
+  --brand-purple-soft: rgba(109, 40, 217, 0.08);
+
+  --role-candidate: #0891B2;
+  --role-issuer: #059669;
+  --role-verifier: #B45309;
+
+  --role-candidate-soft: rgba(8, 145, 178, 0.08);
+  --role-issuer-soft: rgba(5, 150, 105, 0.08);
+  --role-verifier-soft: rgba(180, 83, 9, 0.08);
+
+  --txt-primary: #0F0A1A;
+  --txt-secondary: #5E5276;
+  --txt-muted: #8A819B;
+
+  --hash-green: #15803D;
+  --hash-red: #B91C1C;
+}
+
+/* ============================================================
+   Tailwind v4 theme bridge — expose tokens as utility classes
+   bg-bg-base, text-txt-primary, border-border-main,
+   text-role-candidate, etc.
+   ============================================================ */
+@theme inline {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --color-bg-base: #0a0510;
-  --color-bg-surface: #0f0a1a;
-  --color-bg-elevated: #160d24;
-  --color-border-main: #1e1530;
-  --color-border-subtle: #150f22;
+  --color-bg-base: var(--bg-base);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-sunken: var(--bg-sunken);
 
-  --color-brand-purple: #7C3AED;
-  --color-brand-purple-dim: #4C1D95;
-  --color-accent-cyan: #00D4FF;
-  --color-accent-green: #10B981;
-  --color-accent-amber: #F59E0B;
+  --color-border-main: var(--border-main);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
 
-  --color-txt-primary: #FFFFFF;
-  --color-txt-secondary: #A89BC2;
-  --color-txt-muted: #6B5F7A;
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-purple-dim: var(--brand-purple-dim);
+  --color-brand-purple-soft: var(--brand-purple-soft);
 
-  --color-hash-green: #22C55E;
-  --color-hash-red: #EF4444;
+  --color-role-candidate: var(--role-candidate);
+  --color-role-issuer: var(--role-issuer);
+  --color-role-verifier: var(--role-verifier);
+
+  --color-role-candidate-soft: var(--role-candidate-soft);
+  --color-role-issuer-soft: var(--role-issuer-soft);
+  --color-role-verifier-soft: var(--role-verifier-soft);
+
+  /* Visual-accent aliases (same hues as role colors, used when emphasis
+     is decorative rather than role-semantic). Keep both names so existing
+     components continue to work without churn. */
+  --color-accent-cyan: var(--role-candidate);
+  --color-accent-green: var(--role-issuer);
+  --color-accent-amber: var(--role-verifier);
+
+  --color-txt-primary: var(--txt-primary);
+  --color-txt-secondary: var(--txt-secondary);
+  --color-txt-muted: var(--txt-muted);
+
+  --color-hash-green: var(--hash-green);
+  --color-hash-red: var(--hash-red);
 
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
-  --radius-none: 0px;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+html {
+  background-color: var(--bg-base);
 }
 
 body {
-  background-color: #0a0510;
-  color: #FFFFFF;
+  background-color: var(--bg-base);
+  color: var(--txt-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
-/* Custom font scale utility classes */
+::selection {
+  background: var(--brand-purple-soft);
+  color: var(--txt-primary);
+}
+
+/* ============================================================
+   Font scale utilities (legacy — kept for existing references)
+   ============================================================ */
 .scale-xs { font-size: 11px; line-height: 1.4; }
 .scale-sm { font-size: 13px; line-height: 1.5; }
 .scale-base { font-size: 15px; line-height: 1.6; }
@@ -48,107 +157,32 @@ body {
 .scale-3xl { font-size: 48px; line-height: 1.1; }
 .scale-4xl { font-size: 72px; line-height: 1.0; }
 
-/* Custom subtle scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #05050a;
-}
-::-webkit-scrollbar-thumb {
-  background: #222235;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #3b3b55;
-}
+/* ============================================================
+   Subtle scrollbar
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-sunken); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-purple-dim); }
 
-:root, [data-theme="v2"] {
-  --bg-deep: #0a0510;
-  --bg-card: #12091f;
-  --bg-sidebar: #0f0720;
-  --primary: #7c3aed;
-  --cyan: #00d4ff;
-  --gold: #c9a84c;
-  --text-primary: #ffffff;
-  --text-secondary: #9ca3af;
-}
-
-[data-theme="v1"] {
-  --bg-deep: #04091a;
-  --bg-card: #0b1528;
-  --bg-sidebar: #060d1f;
-  --primary: #00d4ff;
-  --cyan: #00d4ff;
-  --gold: #c9a84c;
-  --text-primary: #f0f4ff;
-  --text-secondary: #7a8caa;
-}
-
-[data-theme="light"] {
-  --bg-deep: #f5f7fa;
-  --bg-card: #ffffff;
-  --bg-sidebar: #eef1f6;
-  --primary: #7c3aed;
-  --cyan: #0099cc;
-  --gold: #d97706;
-  --text-primary: #0f1117;
-  --text-secondary: #4b5563;
-}
-
-[data-theme="v1"] body, [data-theme="light"] body {
-  background-color: var(--bg-deep) !important;
-  color: var(--text-primary) !important;
-}
-
-[data-theme="v1"] .bg-\[\#05050a\], [data-theme="v1"] .bg-\[\#08080f\] {
-  background-color: var(--bg-deep) !important;
-}
-[data-theme="v1"] .bg-\[\#0d0d16\], [data-theme="v1"] .bg-\[\#0f0f1b\], [data-theme="v1"] .bg-\[\#111118\] {
-  background-color: var(--bg-card) !important;
-}
-[data-theme="v1"] .bg-\[\#090913\] {
-  background-color: var(--bg-sidebar) !important;
-}
-
-[data-theme="light"] .bg-\[\#05050a\], [data-theme="light"] .bg-\[\#08080f\] {
-  background-color: var(--bg-deep) !important;
-  color: var(--text-primary) !important;
-}
-[data-theme="light"] .bg-\[\#0d0d16\], [data-theme="light"] .bg-\[\#0f0f1b\], [data-theme="light"] .bg-\[\#111118\] {
-  background-color: var(--bg-card) !important;
-  color: var(--text-primary) !important;
-  border-color: #e5e7eb !important;
-}
-[data-theme="light"] .bg-\[\#090913\] {
-  background-color: var(--bg-sidebar) !important;
-  color: var(--text-primary) !important;
-  border-color: #e5e7eb !important;
-}
-[data-theme="light"] .text-white {
-  color: var(--text-primary) !important;
-}
-[data-theme="light"] .text-gray-400, [data-theme="light"] .text-gray-300 {
-  color: var(--text-secondary) !important;
-}
-
-.resume-preview {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-.resume-preview * {
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-}
+/* ============================================================
+   Misc — preserved from prior file
+   ============================================================ */
+.resume-preview { max-width: 100%; overflow-x: hidden; }
+.resume-preview * { max-width: 100% !important; box-sizing: border-box !important; }
 
 @keyframes pulseCustom {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  50% { opacity: 0.35; }
 }
+.animate-pulse-custom { animation: pulseCustom 2s ease-in-out infinite; }
 
-.animate-pulse-custom {
-  animation: pulseCustom 2s ease-in-out infinite;
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
-
-
